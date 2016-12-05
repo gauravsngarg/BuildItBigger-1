@@ -6,3 +6,7 @@
 /build
 /captures
 .idea
+
+app/app.iml
+
+displayjoke/displayjoke.iml

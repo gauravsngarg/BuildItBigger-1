@@ -1,8 +1,24 @@
 package com.maheshgaya;
 
-public class JokeTeller {
+import java.util.Random;
 
-    public String getJoke(){
-        return "What is the best way to end the world? Run a SQL statement \"DROP TABLE people\"";
+public class JokeTeller {
+    private String joke;
+
+    /*
+     * example joke: "The programmer got stuck in a shower because the instructions on the shampoo bottle said...\n"+
+     "\tLather, Rinse, Repeat."
+     */
+
+    //the class getter and setter
+    public String getJoke() {
+        return joke;
     }
+
+    public void setJoke(String joke){
+        this.joke = joke;
+    }
+
+
+
 }

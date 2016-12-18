@@ -10,3 +10,6 @@
 app/app.iml
 
 displayjoke/displayjoke.iml
+backend/backend.iml
+backend/build
+test/

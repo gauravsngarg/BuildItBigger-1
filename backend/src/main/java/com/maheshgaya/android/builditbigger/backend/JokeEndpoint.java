@@ -33,15 +33,11 @@ import javax.inject.Named;
         )
 )
 public class JokeEndpoint {
-    private static final Logger log =Logger.getLogger(JokeEndpoint.class.getName());
-
-
+    private static final Logger log = Logger.getLogger(JokeEndpoint.class.getName());
 
     @ApiMethod(name = "getJoke")
     public JokeTeller getJoke(@Named("joke") String newJoke) throws NotFoundException{
-        JokeTeller joke = new JokeTeller();
-        joke.setJoke(newJoke);
-        return joke;
+        return new JokeTeller(newJoke);
 
     }
 

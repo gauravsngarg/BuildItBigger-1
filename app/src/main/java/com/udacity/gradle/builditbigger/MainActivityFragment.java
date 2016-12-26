@@ -1,8 +1,10 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +15,23 @@ import com.google.android.gms.ads.AdView;
 import com.maheshgaya.JokeTeller;
 import com.maheshgaya.android.displayjoke.JokeActivity;
 
+import java.util.Random;
+
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
+
+    //Joke from http://stackoverflow.com/questions/234075/what-is-your-best-programmer-joke
+    private static final String[] jokes = new String[]{
+            "A SQL query goes into a bar, walks up to two tables and asks, \"Can I join you?\"",
+            "Q: how many programmers does it take to change a light bulb?\n" +
+                    "\n" +
+                    "A: none, that's a hardware problem",
+            "When your hammer is C++, everything begins to look like a thumb."
+
+    };
 
     public MainActivityFragment() {
     }
@@ -45,11 +59,11 @@ public class MainActivityFragment extends Fragment {
     }
 
     protected void tellJoke() {
-        //Toast.makeText(this, JokeTeller.showJoke(), Toast.LENGTH_SHORT).show();
-        Intent jokeIntent = new Intent(getActivity(), JokeActivity.class);
-        JokeTeller jokeTeller = new JokeTeller();
-        String joke = jokeTeller.getJoke();
-        jokeIntent.putExtra(JokeActivity.JOKE_KEY, joke);
-        startActivity(jokeIntent);
+        //initialize AsyncTask
+        RetrieveJokeTask retrieveJokeTask = new RetrieveJokeTask();
+        Random rand = new Random();
+        int randNumber = rand.nextInt(3);
+
+        retrieveJokeTask.execute(new Pair<Context, String>(getActivity(), jokes[randNumber]));
     }
 }

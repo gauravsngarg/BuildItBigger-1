@@ -10,4 +10,4 @@ See the [tasks](https://github.com/maheshgaya/BuildItBigger/blob/master/TASK.md)
   $ git clone "https://github.com/maheshgaya/BuildItBigger.git"
   ```
 2. Import the project directory in Android Studio.
-3. Run the project in an emulator with SDK 16 or higer
+3. Run the project in an emulator with SDK 16 or higher

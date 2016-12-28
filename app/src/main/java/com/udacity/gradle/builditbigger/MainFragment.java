@@ -1,19 +1,18 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.maheshgaya.JokeTeller;
-import com.maheshgaya.android.displayjoke.JokeActivity;
+import com.maheshgaya.android.displayjoke.BuildConfig;
+import com.udacity.gradle.builditbigger.product.Utils;
 
 import java.util.Random;
 
@@ -23,6 +22,7 @@ import java.util.Random;
  */
 public class MainFragment extends Fragment {
     public static String mCurrentJoke;
+    private static final String TAG = MainFragment.class.getSimpleName();
 
     //Joke from http://stackoverflow.com/questions/234075/what-is-your-best-programmer-joke
     private static final String[] jokes = new String[]{
@@ -35,7 +35,11 @@ public class MainFragment extends Fragment {
     };
 
 
+    /**
+     * Default constructor
+     */
     public MainFragment() {
+
     }
 
     @Override
@@ -49,14 +53,15 @@ public class MainFragment extends Fragment {
                 tellJoke();
             }
         });
-        AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
-        // Create an ad request. Check logcat output for the hashed device ID to
-        // get test ads on a physical device. e.g.
-        // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        mAdView.loadAd(adRequest);
+        Log.d(TAG, "onCreateView: " + BuildConfig.FLAVOR);
+        if (BuildConfig.FLAVOR.equals("free")){
+            Log.d(TAG, "onCreateView: Free");
+            Utils.getAdView(getActivity());
+        } else {
+            Log.d(TAG, "onCreateView: Paid");
+            Utils.getAdView(getActivity());
+        }
+
         return rootView;
     }
 

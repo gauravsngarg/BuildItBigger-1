@@ -37,7 +37,11 @@ public class JokeEndpoint {
 
     @ApiMethod(name = "getJoke")
     public JokeTeller getJoke(@Named("joke") String newJoke) throws NotFoundException{
-        return new JokeTeller(newJoke);
+        if (newJoke != null) {
+            return new JokeTeller(newJoke);
+        } else {
+            return new JokeTeller();
+        }
 
     }
 

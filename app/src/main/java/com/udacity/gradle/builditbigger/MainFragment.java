@@ -21,7 +21,8 @@ import java.util.Random;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainFragment extends Fragment {
+    public static String mCurrentJoke;
 
     //Joke from http://stackoverflow.com/questions/234075/what-is-your-best-programmer-joke
     private static final String[] jokes = new String[]{
@@ -33,7 +34,8 @@ public class MainActivityFragment extends Fragment {
 
     };
 
-    public MainActivityFragment() {
+
+    public MainFragment() {
     }
 
     @Override
@@ -63,7 +65,7 @@ public class MainActivityFragment extends Fragment {
         RetrieveJokeTask retrieveJokeTask = new RetrieveJokeTask();
         Random rand = new Random();
         int randNumber = rand.nextInt(3);
-
+        mCurrentJoke = jokes[randNumber];
         retrieveJokeTask.execute(new Pair<Context, String>(getActivity(), jokes[randNumber]));
     }
 }

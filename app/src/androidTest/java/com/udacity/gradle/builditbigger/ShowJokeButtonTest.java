@@ -28,10 +28,15 @@ public class ShowJokeButtonTest {
 
     @Test
     public void shouldNotBeNull() throws Exception{
+        //check to see if there is an instances of fragment
         assertNotNull(R.id.fragment);
+        //then performs a button click
         onView(withId(R.id.show_joke_btn)).perform(click());
-        assertNotEquals("Connection refused", MainFragment.mCurrentJoke);
-        assertNotNull(MainFragment.mCurrentJoke);
+        //check for errors
+        assertNotEquals("Connection refused", RetrieveJokeTask.mJoke);
+        assertNotEquals("Connection timeout", RetrieveJokeTask.mJoke);
+        //check if it is not null
+        assertNotNull(RetrieveJokeTask.mJoke);
 
     }
 }

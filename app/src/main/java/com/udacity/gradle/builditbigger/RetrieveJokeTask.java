@@ -20,12 +20,15 @@ import java.io.IOException;
  */
 
 //input, progress, output
-public class RetrieveJokeTask extends AsyncTask<Pair<Context, String>, Void, String> {
+public class RetrieveJokeTask extends AsyncTask<Context, Void, String> {
     private static JokesApi jokeApiService = null;
     private Context mContext;
+    //gets the current joke for testing
+    public static String mJoke;
 
+    //gets the joke in the background
     @Override
-    protected String doInBackground(Pair<Context, String>... params) {
+    protected String doInBackground(Context... params) {
         if(jokeApiService == null) {  // Only do this once
             String ipAddress = BuildConfig.YOUR_COMPUTER_IP_ADDRESS;
             JokesApi.Builder builder = new JokesApi.Builder(AndroidHttp.newCompatibleTransport(),
@@ -45,11 +48,10 @@ public class RetrieveJokeTask extends AsyncTask<Pair<Context, String>, Void, Str
             jokeApiService = builder.build();
         }
 
-        mContext = params[0].first;
-        String name = params[0].second;
+        mContext = params[0]; //gets the context
 
         try {
-            return jokeApiService.getJoke(name).execute().getJoke();
+            return jokeApiService.getJoke().execute().getFunnyJoke(); //return the result
         } catch (IOException e) {
             return e.getMessage();
         }
@@ -59,6 +61,7 @@ public class RetrieveJokeTask extends AsyncTask<Pair<Context, String>, Void, Str
     @Override
     protected void onPostExecute(String result) {
         //open joke Activity
+        mJoke = result; //for JUnit testing
         Intent jokeIntent = new Intent(mContext, JokeActivity.class);
         jokeIntent.putExtra(JokeActivity.JOKE_KEY, result);
         mContext.startActivity(jokeIntent);

@@ -21,8 +21,6 @@ import java.util.Random;
  * A placeholder fragment containing a simple view.
  */
 public class MainFragment extends Fragment {
-    //gets the current joke for testing
-    public static String mCurrentJoke;
     //used for logging purposes
     private static final String TAG = MainFragment.class.getSimpleName();
     //shows the pretty horizontal progress bar
@@ -30,15 +28,6 @@ public class MainFragment extends Fragment {
     //used to show the full screen ad for only first time
     private boolean mShownAd = false;
 
-    //Joke from http://stackoverflow.com/questions/234075/what-is-your-best-programmer-joke
-    private static final String[] jokes = new String[]{
-            "A SQL query goes into a bar, walks up to two tables and asks, \"Can I join you?\"",
-            "Q: how many programmers does it take to change a light bulb?\n" +
-                    "\n" +
-                    "A: none, that's a hardware problem",
-            "When your hammer is C++, everything begins to look like a thumb."
-
-    };
 
     /**
      * Default constructor
@@ -109,10 +98,7 @@ public class MainFragment extends Fragment {
             mProgressBar.setVisibility(View.VISIBLE);
             //initialize AsyncTask and get the joke
             RetrieveJokeTask retrieveJokeTask = new RetrieveJokeTask();
-            Random rand = new Random();
-            int randNumber = rand.nextInt(3);
-            mCurrentJoke = jokes[randNumber];
-            retrieveJokeTask.execute(new Pair<Context, String>(getActivity(), jokes[randNumber]));
+            retrieveJokeTask.execute(getActivity());
         }
     }
 }

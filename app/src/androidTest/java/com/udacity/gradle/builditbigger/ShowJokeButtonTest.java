@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static android.support.test.espresso.Espresso.onView;
@@ -29,6 +30,7 @@ public class ShowJokeButtonTest {
     public void shouldNotBeNull() throws Exception{
         assertNotNull(R.id.fragment);
         onView(withId(R.id.show_joke_btn)).perform(click());
+        assertNotEquals("Connection refused", MainFragment.mCurrentJoke);
         assertNotNull(MainFragment.mCurrentJoke);
 
     }

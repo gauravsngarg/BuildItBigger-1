@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.maheshgaya.android.displayjoke.BuildConfig;
 import com.udacity.gradle.builditbigger.product.Utils;
 
 import java.util.Random;
@@ -53,14 +52,9 @@ public class MainFragment extends Fragment {
                 tellJoke();
             }
         });
-        Log.d(TAG, "onCreateView: " + BuildConfig.FLAVOR);
-        if (BuildConfig.FLAVOR.equals("free")){
-            Log.d(TAG, "onCreateView: Free");
-            Utils.getAdView(getActivity());
-        } else {
-            Log.d(TAG, "onCreateView: Paid");
-            Utils.getAdView(getActivity());
-        }
+        Log.d(TAG, "onCreateView: IS FREE?: " + BuildConfig.IS_FREE);
+        Utils.getAdView(rootView);
+
 
         return rootView;
     }

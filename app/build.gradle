@@ -18,13 +18,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    //To test this app on a physical device, add your computer ip address below
+    buildTypes.each {
+        it.buildConfigField 'String', 'YOUR_COMPUTER_IP_ADDRESS', YOUR_COMPUTER_IP_ADDRESS
+    }
     productFlavors{
         free{
             applicationId "com.udacity.gradle.builditbigger.free"
+            buildConfigField "boolean", "IS_FREE", "true"
         }
         pro{
             applicationId "com.udacity.gradle.builditbigger.pro"
-
+            buildConfigField "boolean", "IS_FREE", "false"
         }
     }
 }

@@ -12,8 +12,8 @@ import com.udacity.gradle.builditbigger.R;
  */
 
 public class Utils {
-    public static View getAdView(Activity context){
-        AdView mAdView = (AdView) context.findViewById(R.id.adView);
+    public static void getAdView(View view){
+        AdView mAdView = (AdView) view.findViewById(R.id.adView);
         // Create an ad request. Check logcat output for the hashed device ID to
         // get test ads on a physical device. e.g.
         // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."

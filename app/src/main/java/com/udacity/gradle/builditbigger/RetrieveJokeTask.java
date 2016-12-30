@@ -27,13 +27,13 @@ public class RetrieveJokeTask extends AsyncTask<Pair<Context, String>, Void, Str
     @Override
     protected String doInBackground(Pair<Context, String>... params) {
         if(jokeApiService == null) {  // Only do this once
-
+            String ipAddress = BuildConfig.YOUR_COMPUTER_IP_ADDRESS;
             JokesApi.Builder builder = new JokesApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
                     // options for running against local devappserver
                     // - 10.0.2.2 is localhost's IP address in Android emulator
                     // - turn off compression when running against local devappserver
-                    .setRootUrl("http://localhost:8080/_ah/api/")
+                    .setRootUrl("http://" + ipAddress +":8080/_ah/api/")
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {

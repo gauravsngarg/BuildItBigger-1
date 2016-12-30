@@ -1,10 +1,13 @@
 package com.udacity.gradle.builditbigger.product;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.udacity.gradle.builditbigger.R;
 
 /**
@@ -12,6 +15,8 @@ import com.udacity.gradle.builditbigger.R;
  */
 
 public class Utils {
+    private static InterstitialAd mInterstitialAd;
+
     public static void getAdView(View view){
         AdView mAdView = (AdView) view.findViewById(R.id.adView);
         // Create an ad request. Check logcat output for the hashed device ID to
@@ -23,6 +28,38 @@ public class Utils {
         if (mAdView != null) {
             mAdView.loadAd(adRequest);
         }
-        return mAdView;
+
+    }
+
+    public static void getInterstitialAd(Context context){
+        mInterstitialAd = new InterstitialAd(context);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+            }
+        });
+
+        requestNewInterstitial();
+
+    }
+
+    private static void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }
+    public static void showInterstitialAd(){
+        if (isAdAvailable()){
+            mInterstitialAd.show();
+        }
+    }
+
+    public static boolean isAdAvailable(){
+        return mInterstitialAd.isLoaded();
     }
 }

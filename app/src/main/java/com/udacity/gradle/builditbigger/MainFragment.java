@@ -2,6 +2,7 @@ package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.Pair;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.udacity.gradle.builditbigger.product.Utils;
@@ -22,6 +24,8 @@ import java.util.Random;
 public class MainFragment extends Fragment {
     public static String mCurrentJoke;
     private static final String TAG = MainFragment.class.getSimpleName();
+    private ProgressBar mProgressBar;
+    private boolean mShownAd = false;
 
     //Joke from http://stackoverflow.com/questions/234075/what-is-your-best-programmer-joke
     private static final String[] jokes = new String[]{
@@ -42,6 +46,13 @@ public class MainFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mProgressBar = (ProgressBar)getActivity().findViewById(R.id.progress_bar);
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -54,17 +65,29 @@ public class MainFragment extends Fragment {
         });
         Log.d(TAG, "onCreateView: IS FREE?: " + BuildConfig.IS_FREE);
         Utils.getAdView(rootView);
-
+        Utils.getInterstitialAd(getActivity());
 
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mProgressBar.setVisibility(View.GONE);
+    }
+
     protected void tellJoke() {
         //initialize AsyncTask
-        RetrieveJokeTask retrieveJokeTask = new RetrieveJokeTask();
-        Random rand = new Random();
-        int randNumber = rand.nextInt(3);
-        mCurrentJoke = jokes[randNumber];
-        retrieveJokeTask.execute(new Pair<Context, String>(getActivity(), jokes[randNumber]));
+        if (Utils.isAdAvailable() && !mShownAd) {
+            Utils.showInterstitialAd();
+            mShownAd = true;
+        } else {
+            mProgressBar.setVisibility(View.VISIBLE);
+            RetrieveJokeTask retrieveJokeTask = new RetrieveJokeTask();
+            Random rand = new Random();
+            int randNumber = rand.nextInt(3);
+            mCurrentJoke = jokes[randNumber];
+            retrieveJokeTask.execute(new Pair<Context, String>(getActivity(), jokes[randNumber]));
+        }
     }
 }

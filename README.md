@@ -9,5 +9,7 @@ See the [tasks](https://github.com/maheshgaya/BuildItBigger/blob/master/TASK.md)
   ```
   $ git clone "https://github.com/maheshgaya/BuildItBigger.git"
   ```
-2. Import the project directory in Android Studio.
-3. Run the project in an emulator with SDK 16 or higher
+2. Import the project directory in Android Studio
+3. Change the IP address in the app gradle file
+4. Run "backend" module
+5. Run the project in a physical device with SDK 16 or higher

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.udacity.gradle.builditbigger.product.Utils;
 
@@ -22,9 +21,13 @@ import java.util.Random;
  * A placeholder fragment containing a simple view.
  */
 public class MainFragment extends Fragment {
+    //gets the current joke for testing
     public static String mCurrentJoke;
+    //used for logging purposes
     private static final String TAG = MainFragment.class.getSimpleName();
+    //shows the pretty horizontal progress bar
     private ProgressBar mProgressBar;
+    //used to show the full screen ad for only first time
     private boolean mShownAd = false;
 
     //Joke from http://stackoverflow.com/questions/234075/what-is-your-best-programmer-joke
@@ -37,7 +40,6 @@ public class MainFragment extends Fragment {
 
     };
 
-
     /**
      * Default constructor
      */
@@ -45,6 +47,10 @@ public class MainFragment extends Fragment {
 
     }
 
+    /**
+     * Initializes the progress bar
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -52,10 +58,18 @@ public class MainFragment extends Fragment {
         mProgressBar.setVisibility(View.GONE);
     }
 
+    /**
+     * initializes the views for the fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        //add functionality to the button
         Button showJoke = (Button)rootView.findViewById(R.id.show_joke_btn);
         showJoke.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,26 +77,37 @@ public class MainFragment extends Fragment {
                 tellJoke();
             }
         });
+
+        //if the version is free then show ad
         Log.d(TAG, "onCreateView: IS FREE?: " + BuildConfig.IS_FREE);
-        Utils.getAdView(rootView);
-        Utils.getInterstitialAd(getActivity());
+        Utils.getAdView(rootView); //banner ad
+        Utils.getInterstitialAd(getActivity()); //full screen ad
 
         return rootView;
     }
 
+    /**
+     * reset the progress bar
+     */
     @Override
     public void onResume() {
         super.onResume();
         mProgressBar.setVisibility(View.GONE);
     }
 
+    /**
+     * open ShowJoke activity to show the joke
+     * retrieved from the Google Cloud Endpoint via AsyncTask
+     */
     protected void tellJoke() {
-        //initialize AsyncTask
         if (Utils.isAdAvailable() && !mShownAd) {
+            //show ad if available or if it is the first time
             Utils.showInterstitialAd();
             mShownAd = true;
         } else {
+            //show the progress bar
             mProgressBar.setVisibility(View.VISIBLE);
+            //initialize AsyncTask and get the joke
             RetrieveJokeTask retrieveJokeTask = new RetrieveJokeTask();
             Random rand = new Random();
             int randNumber = rand.nextInt(3);

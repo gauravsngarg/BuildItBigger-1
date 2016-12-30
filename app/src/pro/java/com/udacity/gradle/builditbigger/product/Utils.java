@@ -1,9 +1,13 @@
 package com.udacity.gradle.builditbigger.product;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 
+/**
+ * This class does not apply to Paid version
+ * However, they are left empty as placeholders
+ * Usage in: MainFragment.java
+ */
 public class Utils {
     public static void getAdView(View view){
 

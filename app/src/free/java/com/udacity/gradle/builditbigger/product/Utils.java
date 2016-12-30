@@ -17,6 +17,10 @@ import com.udacity.gradle.builditbigger.R;
 public class Utils {
     private static InterstitialAd mInterstitialAd;
 
+    /**
+     * Shows the banner ad
+     * @param view
+     */
     public static void getAdView(View view){
         AdView mAdView = (AdView) view.findViewById(R.id.adView);
         // Create an ad request. Check logcat output for the hashed device ID to
@@ -31,6 +35,10 @@ public class Utils {
 
     }
 
+    /**
+     * Shows the full screen ad
+     * @param context
+     */
     public static void getInterstitialAd(Context context){
         mInterstitialAd = new InterstitialAd(context);
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
@@ -46,6 +54,9 @@ public class Utils {
 
     }
 
+    /**
+     * gets a new Full Screen ad
+     */
     private static void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -53,12 +64,21 @@ public class Utils {
 
         mInterstitialAd.loadAd(adRequest);
     }
+
+    /**
+     * If the Full Screen ad is available,
+     * show it
+     */
     public static void showInterstitialAd(){
         if (isAdAvailable()){
             mInterstitialAd.show();
         }
     }
 
+    /**
+     * Check if the Full Screen ad is available
+     * @return
+     */
     public static boolean isAdAvailable(){
         return mInterstitialAd.isLoaded();
     }

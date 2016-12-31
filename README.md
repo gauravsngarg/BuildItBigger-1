@@ -3,6 +3,8 @@ An Android app that tells jokes. Project 4 for Udacity Android Developer Nanodeg
 
 See the [tasks](https://github.com/maheshgaya/BuildItBigger/blob/master/TASK.md) for this project.
 
+<img src="https://raw.githubusercontent.com/maheshgaya/maheshgaya.com/master/images/buildItBigger.png" width="280" style="max-width:100%;">
+
 ## Using the source code
 1. Clone the repository
 
